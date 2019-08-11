@@ -21,8 +21,8 @@ ui <- dashboardPage(skin = 'black',
 
   
 server <- function(input, output, session) {
-  data <- shiny::reactive(data.frame())
-  
+
+    
   output$tbl <- renderTable({
     con <- dbConnect(drv = RPostgres::Postgres(),
                      dbname = "wos",
@@ -33,14 +33,12 @@ server <- function(input, output, session) {
     dbGetQuery(con, paste0(input$query, paste0("LIMIT "),input$nrows, ";"))
   })
   
-  # output$tbl<-renderTable(table())
-  # output$connectionlist <- eventReactive(input$list,{dbGetQuery(con, "show processlist")})
-  # 
-  ## try to download as csv
+  
+  
   output$downloadData <- downloadHandler(
-    filename = function() { paste(input$query,".csv",sep = "") },
+    filename = function() { paste('selectedQuery',".csv",sep = "") },
     content = function(file) {
-      write.csv(output$tbl, file)
+      write.csv(tbl, file)
       
     })
 }
