@@ -20,7 +20,7 @@ ui <- dashboardPage(skin = 'black',
 
 
 server <- function(input, output, session) {
-  table <- eventReactive(input$query,{
+  table <- eventReactive(list(input$query, input$nrows),{
     conn <- dbConnect(drv = RPostgres::Postgres(),
                       dbname = "wos",
                       host = "localhost",
