@@ -10,8 +10,8 @@ library(shinydashboard)
 ui <- dashboardPage(skin = 'black',
                     dashboardHeader(title = "Web of Science Query Tool", titleWidth = 300),
                     dashboardSidebar(
-                      textAreaInput("query",label = "Enter SQL Query:", placeholder = "SELECT * FROM wos_address_organizations, wos_summary_names WHERE organization LIKE 'Stanford%'", value = "SELECT * FROM wos_address_organizations, wos_summary_names WHERE organization LIKE 'Stanford%'" ),
-                      numericInput("nrows", "Enter the number of rows to display:", 10),
+                      textAreaInput("query",label = "Enter SQL Query:", placeholder = "SELECT * FROM wos_address_organizations, wos_summary_names WHERE organization LIKE 'Stanford%'", value = "SELECT * FROM pg_catalog.pg_tables WHERE schemaname	= 'raw_data'" ),
+                      numericInput("nrows", "Enter the number of rows to display:", 100),
                       downloadButton("downloadData", "Download")),
                     dashboardBody(
                       fluidRow(div(style = 'overflow-x: scroll', tableOutput("tbl")))
