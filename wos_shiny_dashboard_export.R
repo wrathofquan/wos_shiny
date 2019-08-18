@@ -15,11 +15,11 @@ ui <- dashboardPage(skin = 'black',
                                                    icon("glasses")
                                                  ))),
                     dashboardSidebar(
-                      textAreaInput("query",label = "Enter SQL Query:", placeholder = "SELECT * FROM wos_address_organizations, wos_summary_names WHERE organization LIKE 'Stanford%'", value = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname	= 'public' " ),
-                      numericInput("nrows", "Enter the number of rows to display:", min = 1, 20),
+                      textAreaInput("query", label = "Enter SQL Query:", placeholder = "SELECT * FROM wos_address_organizations, wos_summary_names WHERE organization LIKE 'Stanford%'", value = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname	= 'public' " ),
+                      numericInput("nrows", "Enter the total number of observations to return:", min = 1, 100),
                       downloadButton("downloadData", "Download")),
                     dashboardBody(
-                      fluidRow(div(style = 'overflow-x: scroll', dataTableOutput("tbl")))
+                      fluidRow(div(style = 'overflow-x: scroll', DTOutput("tbl")))
                     ))
 
 
@@ -33,10 +33,10 @@ server <- function(input, output, session) {
                       password = "ssds3141",
                       port = "5432")
     on.exit(dbDisconnect(conn), add = TRUE)
-    dbGetQuery(conn, paste0(input$query, paste0("LIMIT "),input$nrows, ";"))
+    dbGetQuery(conn, paste0(input$query, paste0("  LIMIT "),input$nrows, ";"))
   })
   
-  output$tbl<-renderDataTable({table()}) 
+  output$tbl<-renderDT(table(), server = FALSE) 
   
   # output$connectionlist <- eventReactive(input$list,{dbGetQuery(conn, "show processlist")})
   # 
@@ -48,6 +48,7 @@ server <- function(input, output, session) {
   output$downloadData <- downloadHandler(
     filename = function() { paste(Sys.time(),".csv",sep = "") },
     content = function(file) {
+      s = input$tbl_rows_all
       write.csv(table(), file)
       
     })
