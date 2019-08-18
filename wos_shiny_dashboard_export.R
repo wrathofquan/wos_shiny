@@ -36,7 +36,12 @@ server <- function(input, output, session) {
     dbGetQuery(conn, paste0(input$query, paste0("  LIMIT "),input$nrows, ";"))
   })
   
-  output$tbl<-renderDT(table(), server = FALSE) 
+  output$tbl<-renderDT(table(), filter = 'top', server = FALSE,
+                       options = list(
+                         search = list(regex = TRUE, caseInsensitive = FALSE))
+  )
+  
+  
   
   # output$connectionlist <- eventReactive(input$list,{dbGetQuery(conn, "show processlist")})
   # 
@@ -45,11 +50,11 @@ server <- function(input, output, session) {
   #            ".shiny-output-error:before { visibility: hidden; }"
   # )
   
+
   output$downloadData <- downloadHandler(
     filename = function() { paste(Sys.time(),".csv",sep = "") },
     content = function(file) {
-      s = input$tbl_rows_all
-      write.csv(table(), file)
+      write.csv(table()[input[["tbl_rows_all"]], ], file)
       
     })
 }
