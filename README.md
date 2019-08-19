@@ -9,4 +9,9 @@
 
 
 ## To-do
-- 
+
+- Testing to see if this scales to entire database
+- Parameterize queries for better usability/safety
+- Visualizations for exploratory data analysis
+- Tools to do ad-hoc bibliometric analysis
+
