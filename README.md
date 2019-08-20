@@ -7,12 +7,3 @@
 - Underlying postgresql is only a small subset (~50,000 rows) of the entire database (~200 million rows)
 - Postgresql database is parsed from the raw XML based on this generic [parsing tool](https://github.com/wrathofquan/generic_parser)
 
-
-## To-do
-
-- Testing to see if this scales to entire database
-- Parameterize queries for better usability/safety
-- Visualizations for exploratory data analysis
-- Tools to do ad-hoc bibliometric analysis
-- Develop documentation/entity relationships
-
