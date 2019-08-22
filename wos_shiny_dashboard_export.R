@@ -29,7 +29,7 @@ server <- function(input, output, session) {
                       dbname = "wos",
                       host = "wos.cxo3wqeijrjm.us-east-2.rds.amazonaws.com",
                       user = "wos_admin",
-                      password = "ssds3141",
+                      password = "####",
                       port = "5432")
     on.exit(dbDisconnect(conn), add = TRUE)
     dbGetQuery(conn, paste0(input$query, paste0("  LIMIT "),input$nrows, ";"))
