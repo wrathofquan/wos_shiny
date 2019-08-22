@@ -41,9 +41,9 @@ server <- function(input, output, session) {
   table <- eventReactive(list(input$table, input$nrows),{
     conn <- dbConnect(drv = RPostgres::Postgres(),
                       dbname = "wos",
-                      host = "wos.cxo3wqeijrjm.us-east-2.rds.amazonaws.com",
+                      host = "###",
                       user = "wos_admin",
-                      password = "ssds3141",
+                      password = "###",
                       port = "5432")
     on.exit(dbDisconnect(conn), add = TRUE)
     dbGetQuery(conn, paste0("SELECT * FROM ", paste0(input$table), paste0("  LIMIT "),input$nrows, ";"))
